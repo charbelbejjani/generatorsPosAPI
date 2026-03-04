@@ -1,0 +1,39 @@
+meta {
+  name: Update Zone
+  type: http
+  seq: 4
+}
+
+put {
+  url: {{baseUrl}}/api/zones/1
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{access_token}}
+}
+
+body:json {
+  {
+    "name": "Updated Zone Name",
+    "active": 1
+  }
+}
+
+docs {
+  Update an existing zone.
+  
+  Change the ID in the URL as needed.
+  
+  Fields (all optional):
+  - name: Zone name
+  - zoneGroupId: Zone group ID
+  - active: 1 for active, 0 for inactive
+  
+  Note: Cannot deactivate if has active clients.
+  
+  Requires:
+  - Authentication (valid access token)
+  - Edit permission on zones page
+}

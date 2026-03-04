@@ -1,0 +1,36 @@
+meta {
+  name: Create Zone
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{baseUrl}}/api/zones
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{access_token}}
+}
+
+body:json {
+  {
+    "name": "Test Zone",
+    "zoneGroupId": 1,
+    "active": 1
+  }
+}
+
+docs {
+  Create a new zone.
+  
+  Fields:
+  - name (required): Zone name
+  - zoneGroupId (required): Zone group ID
+  - active (default: 1): 1 for active, 0 for inactive
+  
+  Requires:
+  - Authentication (valid access token)
+  - Add permission on zones page
+}

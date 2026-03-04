@@ -1,0 +1,23 @@
+meta {
+  name: Get All Users
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/api/users
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{access_token}}
+}
+
+docs {
+  Get all users from the system.
+  
+  Requires:
+  - Authentication (valid access token)
+  - Read permission on users page
+}

@@ -1,0 +1,24 @@
+meta {
+  name: Get Active Amperages
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{baseUrl}}/api/lookups/amperages
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{access_token}}
+}
+
+docs {
+  Get all active amperages for dropdown lists.
+  
+  Returns minimal data: id, value, description, fixedAmount
+  
+  Requires:
+  - Authentication (valid access token)
+}

@@ -1,0 +1,23 @@
+meta {
+  name: Get All Exceptions
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/api/exceptions
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{access_token}}
+}
+
+docs {
+  Get all exceptions (lookup table for client exceptions).
+  
+  Requires:
+  - Authentication (valid access token)
+  - Read permission
+}

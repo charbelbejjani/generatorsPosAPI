@@ -1,0 +1,40 @@
+meta {
+  name: Update Amperage
+  type: http
+  seq: 4
+}
+
+put {
+  url: {{baseUrl}}/api/amperages/1
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{access_token}}
+}
+
+body:json {
+  {
+    "description": "Updated Description",
+    "fixedAmount": 120000,
+    "active": 1
+  }
+}
+
+docs {
+  Update an existing amperage.
+  
+  Change the ID in the URL as needed.
+  
+  Fields:
+  - description: Description
+  - fixedAmount: Fixed amount for billing
+  - active: 1 for active, 0 for inactive
+  
+  Note: Cannot deactivate if assigned to clients.
+  
+  Requires:
+  - Authentication (valid access token)
+  - Edit permission on amperage page
+}

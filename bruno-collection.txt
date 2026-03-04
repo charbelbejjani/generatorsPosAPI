@@ -1,0 +1,75 @@
+# Authentication API - cURL Commands for Bruno
+# Base URL: http://localhost:4000
+
+# ============================================
+# 1. LOGIN
+# ============================================
+curl -X POST http://localhost:4000/api/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{
+    "username": "admin",
+    "password": "password123"
+  }'
+
+# ============================================
+# 2. REFRESH TOKEN
+# ============================================
+curl -X POST http://localhost:4000/api/auth/refresh \
+  -H "Content-Type: application/json" \
+  -d '{
+    "refresh_token": "YOUR_REFRESH_TOKEN_HERE"
+  }'
+
+# ============================================
+# 3. GET CURRENT USER (ME)
+# ============================================
+curl -X GET http://localhost:4000/api/auth/me \
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN_HERE"
+
+# ============================================
+# 4. LOGOUT
+# ============================================
+curl -X POST http://localhost:4000/api/auth/logout \
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN_HERE" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "refresh_token": "YOUR_REFRESH_TOKEN_HERE"
+  }'
+
+# ============================================
+# 5. CHANGE PASSWORD
+# ============================================
+curl -X POST http://localhost:4000/api/auth/change-password \
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN_HERE" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "current_password": "old_password",
+    "new_password": "new_password"
+  }'
+
+# ============================================
+# 6. GET ALL USERS (Protected Endpoint Example)
+# ============================================
+curl -X GET http://localhost:4000/api/users \
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN_HERE"
+
+# ============================================
+# 7. GET USER BY ID (Protected Endpoint Example)
+# ============================================
+curl -X GET http://localhost:4000/api/users/1 \
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN_HERE"
+
+# ============================================
+# 8. CREATE USER (Protected Endpoint Example)
+# ============================================
+curl -X POST http://localhost:4000/api/users \
+  -H "Authorization: Bearer YOUR_ACCESS_TOKEN_HERE" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "first_name": "John",
+    "last_name": "Doe",
+    "username": "johndoe",
+    "password": "password123",
+    "email": "john@example.com",
+    "group_id": 2
+  }'

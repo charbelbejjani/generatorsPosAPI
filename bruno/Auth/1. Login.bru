@@ -1,0 +1,38 @@
+meta {
+  name: 1. Login
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{baseUrl}}/api/auth/login
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "username": "admin",
+    "password": "admin"
+  }
+}
+
+script:post-response {
+  if (res.status === 200) {
+    bru.setEnvVar('access_token', res.body.access_token);
+    bru.setEnvVar('refresh_token', res.body.refresh_token);
+    console.log('✅ Tokens saved to environment variables');
+  }
+}
+
+docs {
+  Login with username and password to get access and refresh tokens.
+  
+  Response will include:
+  - access_token (15 min expiry)
+  - refresh_token (7 days expiry)
+  - user info
+  - permissions
+  
+  The access_token and refresh_token will be automatically saved to environment variables.
+}

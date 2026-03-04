@@ -1,0 +1,21 @@
+meta {
+  name: 3. Get Current User
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{baseUrl}}/api/auth/me
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{access_token}}
+}
+
+docs {
+  Get current authenticated user information including permissions.
+  
+  Requires valid access token in Authorization header.
+}

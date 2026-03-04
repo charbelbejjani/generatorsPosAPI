@@ -1,0 +1,32 @@
+meta {
+  name: Get Next Order Number
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{baseUrl}}/api/clients/next-order-number?zoneId=1
+  body: none
+  auth: bearer
+}
+
+params:query {
+  zoneId: 1
+}
+
+auth:bearer {
+  token: {{access_token}}
+}
+
+docs {
+  Get the next available order number for a zone.
+  
+  Query parameters:
+  - zoneId (required): Zone ID to get next order number for
+  
+  Returns: { nextOrderNumber: number }
+  
+  Requires:
+  - Authentication (valid access token)
+  - Read permission on clients page
+}

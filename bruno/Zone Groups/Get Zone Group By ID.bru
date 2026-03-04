@@ -1,0 +1,25 @@
+meta {
+  name: Get Zone Group By ID
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/api/zone-groups/1
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{access_token}}
+}
+
+docs {
+  Get a specific zone group by ID.
+  
+  Change the ID in the URL as needed.
+  
+  Requires:
+  - Authentication (valid access token)
+  - Read permission on zone groups page
+}

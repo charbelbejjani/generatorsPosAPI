@@ -1,0 +1,27 @@
+meta {
+  name: Delete Client
+  type: http
+  seq: 6
+}
+
+delete {
+  url: {{baseUrl}}/api/clients/1
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{access_token}}
+}
+
+docs {
+  Deactivate (soft delete) a client.
+  
+  Change the ID in the URL as needed.
+  
+  Returns 204 No Content on success.
+  
+  Requires:
+  - Authentication (valid access token)
+  - Delete permission on clients page
+}

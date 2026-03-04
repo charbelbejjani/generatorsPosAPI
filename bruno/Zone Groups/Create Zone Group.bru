@@ -1,0 +1,36 @@
+meta {
+  name: Create Zone Group
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{baseUrl}}/api/zone-groups
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{access_token}}
+}
+
+body:json {
+  {
+    "name": "Test Group",
+    "description": "Test Description",
+    "active": 1
+  }
+}
+
+docs {
+  Create a new zone group.
+  
+  Fields:
+  - name (required): Zone group name
+  - description: Zone group description
+  - active (default: 1): 1 for active, 0 for inactive
+  
+  Requires:
+  - Authentication (valid access token)
+  - Add permission on zone groups page
+}

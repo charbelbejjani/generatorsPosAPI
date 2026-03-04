@@ -1,0 +1,44 @@
+meta {
+  name: Create User
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{baseUrl}}/api/users
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{access_token}}
+}
+
+body:json {
+  {
+    "first_name": "John",
+    "last_name": "Doe",
+    "username": "johndoe",
+    "password": "password123",
+    "email": "john@example.com",
+    "group_id": 2
+  }
+}
+
+docs {
+  Create a new user.
+  
+  Required fields:
+  - first_name: User's first name
+  - username: Unique username
+  - password: Password (will be hashed with bcrypt)
+  
+  Optional fields:
+  - last_name: User's last name
+  - email: Email address
+  - group_id: Group/role ID
+  
+  Requires:
+  - Authentication (valid access token)
+  - Add permission on users page
+}

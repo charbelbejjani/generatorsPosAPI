@@ -1,0 +1,162 @@
+{
+  "name": "Generators POS API",
+  "version": "1.0.0",
+  "baseUrl": "http://localhost:4000",
+  "requests": [
+    {
+      "name": "1. Login",
+      "method": "POST",
+      "url": "{{baseUrl}}/api/auth/login",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "body": {
+        "type": "json",
+        "json": {
+          "username": "admin",
+          "password": "password123"
+        }
+      },
+      "description": "Login with username and password to get access and refresh tokens"
+    },
+    {
+      "name": "2. Refresh Token",
+      "method": "POST",
+      "url": "{{baseUrl}}/api/auth/refresh",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "body": {
+        "type": "json",
+        "json": {
+          "refresh_token": "{{refresh_token}}"
+        }
+      },
+      "description": "Get a new access token using refresh token"
+    },
+    {
+      "name": "3. Get Current User",
+      "method": "GET",
+      "url": "{{baseUrl}}/api/auth/me",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{access_token}}"
+        }
+      ],
+      "description": "Get current authenticated user information"
+    },
+    {
+      "name": "4. Logout",
+      "method": "POST",
+      "url": "{{baseUrl}}/api/auth/logout",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{access_token}}"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "body": {
+        "type": "json",
+        "json": {
+          "refresh_token": "{{refresh_token}}"
+        }
+      },
+      "description": "Logout and revoke refresh token"
+    },
+    {
+      "name": "5. Change Password",
+      "method": "POST",
+      "url": "{{baseUrl}}/api/auth/change-password",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{access_token}}"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "body": {
+        "type": "json",
+        "json": {
+          "current_password": "old_password",
+          "new_password": "new_password"
+        }
+      },
+      "description": "Change user password (requires current password)"
+    },
+    {
+      "name": "6. Get All Users",
+      "method": "GET",
+      "url": "{{baseUrl}}/api/users",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{access_token}}"
+        }
+      ],
+      "description": "Get all users (requires authentication and read permission)"
+    },
+    {
+      "name": "7. Get User By ID",
+      "method": "GET",
+      "url": "{{baseUrl}}/api/users/1",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{access_token}}"
+        }
+      ],
+      "description": "Get a specific user by ID (requires authentication and read permission)"
+    },
+    {
+      "name": "8. Create User",
+      "method": "POST",
+      "url": "{{baseUrl}}/api/users",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{access_token}}"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "body": {
+        "type": "json",
+        "json": {
+          "first_name": "John",
+          "last_name": "Doe",
+          "username": "johndoe",
+          "password": "password123",
+          "email": "john@example.com",
+          "group_id": 2
+        }
+      },
+      "description": "Create a new user (requires authentication and add permission)"
+    }
+  ],
+  "environments": [
+    {
+      "name": "Local",
+      "variables": {
+        "baseUrl": "http://localhost:4000",
+        "access_token": "",
+        "refresh_token": ""
+      }
+    }
+  ]
+}

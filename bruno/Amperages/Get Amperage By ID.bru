@@ -1,0 +1,25 @@
+meta {
+  name: Get Amperage By ID
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/api/amperages/1
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{access_token}}
+}
+
+docs {
+  Get a specific amperage by ID.
+  
+  Change the ID in the URL as needed.
+  
+  Requires:
+  - Authentication (valid access token)
+  - Read permission on amperage page
+}

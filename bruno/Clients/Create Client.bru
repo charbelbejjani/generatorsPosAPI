@@ -1,0 +1,53 @@
+meta {
+  name: Create Client
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{baseUrl}}/api/clients
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{access_token}}
+}
+
+body:json {
+  {
+    "firstName": "John",
+    "middleName": "",
+    "lastName": "Doe",
+    "zoneId": 1,
+    "amperageId": 1,
+    "paymentAmperageId": 1,
+    "exceptionId": null,
+    "mobile": "03123456",
+    "address": "Main Street 123",
+    "active": true
+  }
+}
+
+docs {
+  Create a new client.
+  
+  Required fields:
+  - zoneId: Zone ID (must be active)
+  
+  Optional fields:
+  - orderNumber: Order number (auto-generated if not provided)
+  - firstName: Client first name
+  - middleName: Client middle name
+  - lastName: Client last name
+  - amperageId: Amperage ID (must be active)
+  - paymentAmperageId: Payment amperage ID (must be active)
+  - exceptionId: Exception ID
+  - mobile: Mobile number
+  - address: Client address
+  - active: true for active, false for inactive (default: true)
+  
+  Requires:
+  - Authentication (valid access token)
+  - Add permission on clients page
+}

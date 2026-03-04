@@ -1,0 +1,27 @@
+meta {
+  name: Delete Zone Group
+  type: http
+  seq: 5
+}
+
+delete {
+  url: {{baseUrl}}/api/zone-groups/1
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{access_token}}
+}
+
+docs {
+  Deactivate (soft delete) a zone group.
+  
+  Change the ID in the URL as needed.
+  
+  Note: Cannot delete if has active zones.
+  
+  Requires:
+  - Authentication (valid access token)
+  - Delete permission on zone groups page
+}

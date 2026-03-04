@@ -1,0 +1,362 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model amperage {
+  amp_id                                                           Int                @id @default(autoincrement())
+  amp_value                                                        Float?
+  amp_desc                                                         String?            @db.VarChar(255)
+  amp_num                                                          Int?               @db.TinyInt
+  amp_active                                                       Boolean?           @default(true)
+  amp_ts                                                           DateTime?          @default(now()) @db.Timestamp(0)
+  amp_userid                                                       Int?
+  amp_fix_amount                                                   Int?
+  amp_min_kw_value                                                 Int?
+  amp_apply_min_kw                                                 Boolean?           @default(false)
+  clients_clients_client_amp_idToamperage                          clients[]          @relation("clients_client_amp_idToamperage")
+  clients_clients_client_pay_amp_idToamperage                      clients[]          @relation("clients_client_pay_amp_idToamperage")
+  payments_details_payments_details_pd_client_amp_idToamperage     payments_details[] @relation("payments_details_pd_client_amp_idToamperage")
+  payments_details_payments_details_pd_client_pay_amp_idToamperage payments_details[] @relation("payments_details_pd_client_pay_amp_idToamperage")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model clients {
+  client_id                                    Int                @id @default(autoincrement())
+  client_first_name                            String?            @db.VarChar(255)
+  client_middle_name                           String?            @db.VarChar(255)
+  client_last_name                             String?            @db.VarChar(255)
+  client_mobile                                String?            @db.VarChar(15)
+  client_address                               String?            @db.VarChar(255)
+  client_zone_id                               Int?
+  client_amp_id                                Int?
+  client_pay_amp_id                            Int?
+  client_excep_flg                             Int?
+  client_excep_amt                             Int?
+  client_active                                Boolean?           @default(true)
+  client_ts                                    DateTime?          @default(now()) @db.Timestamp(0)
+  client_userid                                Int?
+  client_gender                                Boolean?
+  client_is_taxable                            Int?               @db.TinyInt
+  client_order_num                             Int?
+  client_title                                 String?            @db.VarChar(255)
+  client_extra                                 Boolean?           @default(false)
+  client_aadad                                 Boolean?           @default(false)
+  old_addad                                    Int?
+  new_addad                                    Int?
+  zones                                        zones?             @relation(fields: [client_zone_id], references: [zone_id], onDelete: NoAction, onUpdate: NoAction, map: "clients_ibfk_1")
+  amperage_clients_client_amp_idToamperage     amperage?          @relation("clients_client_amp_idToamperage", fields: [client_amp_id], references: [amp_id], onDelete: NoAction, onUpdate: NoAction, map: "clients_ibfk_2")
+  amperage_clients_client_pay_amp_idToamperage amperage?          @relation("clients_client_pay_amp_idToamperage", fields: [client_pay_amp_id], references: [amp_id], onDelete: NoAction, onUpdate: NoAction, map: "clients_ibfk_3")
+  exceptions                                   exceptions?        @relation(fields: [client_excep_flg], references: [exp_id], onDelete: NoAction, onUpdate: NoAction, map: "clients_ibfk_4")
+  payments_details                             payments_details[]
+
+  @@index([client_amp_id], map: "client_amp_id")
+  @@index([client_excep_flg], map: "client_excep_flg")
+  @@index([client_pay_amp_id], map: "client_pay_amp_id")
+  @@index([client_zone_id], map: "client_zone_id")
+}
+
+model exceptions {
+  exp_id           Int                @id @default(autoincrement())
+  exp_name         String?            @db.VarChar(255)
+  clients          clients[]
+  payments_details payments_details[]
+}
+
+model expenses {
+  e_id     Int       @id
+  e_name   String?   @db.VarChar(255)
+  e_ts     DateTime? @default(now()) @db.Timestamp(0)
+  e_userid Int?
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model expenses_entries {
+  ee_id     Int      @id
+  ee_e_id   Int?
+  ee_sch_id Int?
+  ee_amt    Int?
+  ee_active Boolean?
+  ee_userid Int?
+  ee_ts     String?  @db.VarChar(255)
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model pages {
+  pageid                         Int               @id @default(autoincrement())
+  pagename                       String?           @db.VarChar(255)
+  section                        Int?
+  pageurl                        String?           @db.VarChar(255)
+  pageactive                     Boolean?          @default(true)
+  section_pages_sectionTosection section?          @relation("pages_sectionTosection", fields: [section], references: [secid], onDelete: NoAction, onUpdate: NoAction, map: "pages_ibfk_1")
+  tblcontrols                    tblcontrols[]
+  tblusers_action                tblusers_action[]
+  users_rights                   users_rights[]
+
+  @@index([section], map: "section")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model payments_details {
+  pd_id                                                    Int          @id @default(autoincrement())
+  pd_client_id                                             Int?
+  pd_sch_id                                                Int?
+  pd_serial                                                String?      @db.VarChar(20)
+  pd_amt                                                   Int?
+  pd_amt_old                                               Int
+  pd_userid                                                Int?
+  pd_ts                                                    DateTime?    @default(now()) @db.Timestamp(0)
+  pd_active                                                Boolean?     @default(true)
+  pd_print                                                 Boolean?     @default(false)
+  pd_print_userid                                          Int?
+  pd_print_ts                                              DateTime?    @db.DateTime(0)
+  pd_paid                                                  Boolean?     @default(false)
+  pd_paid_userid                                           Int?
+  pd_paid_ts                                               DateTime?    @db.DateTime(0)
+  pd_client_first_name                                     String?      @db.VarChar(255)
+  pd_client_middle_name                                    String?      @db.VarChar(255)
+  pd_client_last_name                                      String?      @db.VarChar(255)
+  pd_client_mobile                                         String?      @db.VarChar(15)
+  pd_client_address                                        String?      @db.VarChar(255)
+  pd_client_zone_id                                        Int?
+  pd_client_amp_id                                         Int?
+  pd_client_pay_amp_id                                     Int?
+  pd_client_excep_flg                                      Int?
+  pd_client_excep_amt                                      Int?
+  pd_client_gender                                         Boolean?
+  pd_client_is_taxable                                     Int?         @db.TinyInt
+  pd_client_order_num                                      Int?
+  pd_client_title                                          String?      @db.VarChar(255)
+  pd_client_extra                                          Boolean?     @default(false)
+  pd_client_old_aadad                                      Int?
+  pd_client_new_aadad                                      Int?
+  pd_client_aadad                                          Boolean?
+  pd_amp_min_kw_value                                      Int?
+  pd_dollar_rate                                           Int?
+  pd_paid_currency                                         Boolean?
+  pd_amp_fixed_amount                                      Int?
+  zones                                                    zones?       @relation(fields: [pd_client_zone_id], references: [zone_id], onDelete: NoAction, onUpdate: NoAction, map: "clients_ibfk_11")
+  amperage_payments_details_pd_client_amp_idToamperage     amperage?    @relation("payments_details_pd_client_amp_idToamperage", fields: [pd_client_amp_id], references: [amp_id], onDelete: NoAction, onUpdate: NoAction, map: "clients_ibfk_21")
+  amperage_payments_details_pd_client_pay_amp_idToamperage amperage?    @relation("payments_details_pd_client_pay_amp_idToamperage", fields: [pd_client_pay_amp_id], references: [amp_id], onDelete: NoAction, onUpdate: NoAction, map: "clients_ibfk_31")
+  exceptions                                               exceptions?  @relation(fields: [pd_client_excep_flg], references: [exp_id], onDelete: NoAction, onUpdate: NoAction, map: "clients_ibfk_41")
+  tblschedule                                              tblschedule? @relation(fields: [pd_sch_id], references: [sch_id], onDelete: NoAction, onUpdate: NoAction, map: "payments_details_ibfk_2")
+  clients                                                  clients?     @relation(fields: [pd_client_id], references: [client_id], onDelete: NoAction, onUpdate: NoAction, map: "payments_details_ibfk_3")
+
+  @@index([pd_client_zone_id], map: "clients_ibfk_11")
+  @@index([pd_client_amp_id], map: "clients_ibfk_21")
+  @@index([pd_client_pay_amp_id], map: "clients_ibfk_31")
+  @@index([pd_client_excep_flg], map: "clients_ibfk_41")
+  @@index([pd_client_id], map: "pd_p_id")
+  @@index([pd_sch_id], map: "pd_sch_id")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model refresh_tokens {
+  rt_id         Int       @id @default(autoincrement())
+  rt_token      String    @db.VarChar(500)
+  rt_userid     Int
+  rt_expires_at DateTime  @db.DateTime(0)
+  rt_created_at DateTime? @default(now()) @db.Timestamp(0)
+  rt_revoked    Boolean?  @default(false)
+  rt_ip_address String?   @db.VarChar(45)
+  rt_user_agent String?   @db.VarChar(255)
+  users         users     @relation(fields: [rt_userid], references: [userid], onDelete: Cascade, onUpdate: Restrict, map: "refresh_tokens_ibfk_1")
+
+  @@index([rt_expires_at], map: "idx_rt_expires")
+  @@index([rt_token], map: "idx_rt_token")
+  @@index([rt_userid], map: "idx_rt_userid")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model section {
+  secid                        Int     @id @default(autoincrement())
+  secname                      String? @db.VarChar(255)
+  securl                       String? @db.VarChar(255)
+  secorder                     Int?    @db.TinyInt
+  pages_pages_sectionTosection pages[] @relation("pages_sectionTosection")
+}
+
+model serial_numbering {
+  sn_id     Int     @id @default(autoincrement())
+  sn_prefix String? @db.VarChar(4)
+  sn_serial Int?
+  sn_year   Int?
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model sms_log {
+  sl_id        Int       @id @default(autoincrement())
+  sl_param     String?   @db.Text
+  sl_url       String?   @db.Text
+  sl_ts        DateTime? @default(now()) @db.Timestamp(0)
+  sl_return    String?   @db.Text
+  sl_return_ts DateTime? @db.DateTime(0)
+  sl_success   Int?      @default(1) @db.TinyInt
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model tblcontrols {
+  control_id        Int                 @id @default(autoincrement())
+  control_name      String?             @db.VarChar(255)
+  control_page_id   Int?
+  control_userid    Int?
+  control_ts        DateTime?           @default(now()) @db.Timestamp(0)
+  control_active    Boolean?            @default(true)
+  pages             pages?              @relation(fields: [control_page_id], references: [pageid], onDelete: NoAction, onUpdate: NoAction, map: "tblcontrols_ibfk_1")
+  tblusers_controls tblusers_controls[]
+
+  @@index([control_page_id], map: "control_page_id")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model tblcurrencies {
+  curr_id     Int       @id @default(autoincrement())
+  curr_desc   String?   @db.VarChar(255)
+  curr_symbol String?   @db.VarChar(255)
+  curr_active Boolean?  @default(true)
+  curr_userid Int?
+  curr_ts     DateTime? @default(now()) @db.Timestamp(0)
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model tblphonecodes {
+  code_id     Int       @id @default(autoincrement())
+  code_num    String?   @db.VarChar(4)
+  code_type   Int?      @default(1) @db.TinyInt
+  code_userid Int?
+  code_ts     DateTime? @default(now()) @db.Timestamp(0)
+  code_active Int?      @default(1) @db.TinyInt
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model tblqueries_errors {
+  te_id        Int       @id @default(autoincrement())
+  te_file      String?   @db.VarChar(255)
+  te_line      String?   @db.VarChar(255)
+  te_function  String?   @db.VarChar(255)
+  te_error     String?   @db.VarChar(255)
+  te_timestamp DateTime? @default(now()) @db.Timestamp(0)
+  te_active    Boolean?  @default(true)
+  te_userid    Int?
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model tblschedule {
+  sch_id           Int                @id @default(autoincrement())
+  sch_month        Int?
+  sch_year         Int?
+  sch_desc         String?            @db.VarChar(255)
+  sch_userid       Int?
+  sch_ts           DateTime?          @default(now()) @db.Timestamp(0)
+  sch_active       Boolean?           @default(true)
+  sch_cost         Int?
+  sch_kw_cost      Int?
+  sch_dollar_rate  Int?
+  payments_details payments_details[]
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model tbluserlogin {
+  log_id     Int       @id @default(autoincrement())
+  log_userid Int?
+  log_ts     DateTime? @default(now()) @db.Timestamp(0)
+  log_type   Int?
+}
+
+model tblusers_action {
+  ua_id     Int       @id @default(autoincrement())
+  ua_page   Int?
+  ua_userid Int?
+  ua_ts     DateTime? @default(now()) @db.Timestamp(0)
+  pages     pages?    @relation(fields: [ua_page], references: [pageid], onDelete: NoAction, onUpdate: NoAction, map: "tblusers_action_ibfk_1")
+  users     users?    @relation(fields: [ua_userid], references: [userid], onDelete: NoAction, onUpdate: NoAction, map: "tblusers_action_ibfk_2")
+
+  @@index([ua_page], map: "ua_page")
+  @@index([ua_userid], map: "ua_userid")
+}
+
+model tblusers_controls {
+  uc_grp_id     Int          @default(0)
+  uc_control_id Int          @default(0)
+  users_groups  users_groups @relation(fields: [uc_grp_id], references: [groupid], onDelete: NoAction, onUpdate: NoAction, map: "tblusers_controls_ibfk_1")
+  tblcontrols   tblcontrols  @relation(fields: [uc_control_id], references: [control_id], onDelete: NoAction, onUpdate: NoAction, map: "tblusers_controls_ibfk_2")
+
+  @@id([uc_grp_id, uc_control_id])
+  @@index([uc_control_id], map: "uc_control_id")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model users {
+  userid          Int               @id @default(autoincrement())
+  first_name      String?           @db.VarChar(255)
+  last_name       String?           @db.VarChar(255)
+  active          Boolean?          @default(true)
+  loginattempts   Int?              @default(0)
+  username        String?           @db.VarChar(255)
+  password        String?           @db.VarChar(255)
+  email           String?           @db.VarChar(255)
+  group_id        Int?
+  locked          Boolean?          @default(false)
+  last_login      DateTime?         @db.DateTime(0)
+  refresh_tokens  refresh_tokens[]
+  tblusers_action tblusers_action[]
+  users_groups    users_groups?     @relation(fields: [group_id], references: [groupid], onDelete: NoAction, onUpdate: NoAction, map: "users_ibfk_1")
+
+  @@index([group_id], map: "fk_groupid")
+  @@index([active, locked], map: "idx_active_locked")
+  @@index([username], map: "idx_username")
+}
+
+model users_groups {
+  groupid           Int                 @id @default(autoincrement())
+  groupname         String?             @db.VarChar(255)
+  group_active      Boolean?            @default(true)
+  tblusers_controls tblusers_controls[]
+  users             users[]
+  users_rights      users_rights[]
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model users_rights {
+  ur_pageid     Int          @default(0)
+  ur_groupid    Int          @default(0)
+  ur_permission Int?         @default(4) @db.TinyInt
+  users_groups  users_groups @relation(fields: [ur_groupid], references: [groupid], onDelete: NoAction, onUpdate: NoAction, map: "users_rights_ibfk_1")
+  pages         pages        @relation(fields: [ur_pageid], references: [pageid], onDelete: NoAction, onUpdate: NoAction, map: "users_rights_ibfk_2")
+
+  @@id([ur_pageid, ur_groupid])
+  @@index([ur_groupid], map: "fk1_groupid")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model zones {
+  zone_id          Int                @id @default(autoincrement())
+  zone_name        String?            @db.VarChar(255)
+  zone_desc        String?            @db.VarChar(255)
+  zone_active      Boolean?           @default(true)
+  zone_ts          DateTime?          @default(now()) @db.Timestamp(0)
+  zone_userid      Int?
+  zone_zg_id       Int?
+  zone_order       Int?               @db.TinyInt
+  clients          clients[]
+  payments_details payments_details[]
+  zones_groups     zones_groups?      @relation(fields: [zone_zg_id], references: [zg_id], onDelete: NoAction, onUpdate: NoAction, map: "zones_ibfk_1")
+
+  @@index([zone_zg_id], map: "zone_zg_id")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model zones_groups {
+  zg_id     Int       @id @default(autoincrement())
+  zg_name   String?   @db.VarChar(255)
+  zg_desc   String?   @db.VarChar(255)
+  zg_active Boolean?  @default(true)
+  zg_ts     DateTime? @default(now()) @db.Timestamp(0)
+  zg_userid Int?
+  zones     zones[]
+}

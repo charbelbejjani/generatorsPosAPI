@@ -1,0 +1,23 @@
+meta {
+  name: Get All Amperages
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/api/amperages
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{access_token}}
+}
+
+docs {
+  Get all amperages.
+  
+  Requires:
+  - Authentication (valid access token)
+  - Read permission on amperage page (pageid: 7)
+}

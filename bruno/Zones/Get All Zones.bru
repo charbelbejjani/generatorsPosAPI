@@ -1,0 +1,30 @@
+meta {
+  name: Get All Zones
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/api/zones
+  body: none
+  auth: bearer
+}
+
+params:query {
+  ~zoneGroupId: 1
+}
+
+auth:bearer {
+  token: {{access_token}}
+}
+
+docs {
+  Get all zones with optional filtering by zone group.
+  
+  Query parameters:
+  - zoneGroupId (optional): Filter zones by zone group ID
+  
+  Requires:
+  - Authentication (valid access token)
+  - Read permission on zones page (pageid: 5)
+}

@@ -1,0 +1,38 @@
+meta {
+  name: Create Amperage
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{baseUrl}}/api/amperages
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{access_token}}
+}
+
+body:json {
+  {
+    "value": 50,
+    "description": "50 Amperes",
+    "fixedAmount": 100000,
+    "active": 1
+  }
+}
+
+docs {
+  Create a new amperage.
+  
+  Fields:
+  - value (required): Amperage value (numeric)
+  - description: Description
+  - fixedAmount: Fixed amount for billing
+  - active (default: 1): 1 for active, 0 for inactive
+  
+  Requires:
+  - Authentication (valid access token)
+  - Add permission on amperage page
+}

@@ -1,0 +1,48 @@
+meta {
+  name: Update Client
+  type: http
+  seq: 5
+}
+
+put {
+  url: {{baseUrl}}/api/clients/1
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{access_token}}
+}
+
+body:json {
+  {
+    "firstName": "John",
+    "middleName": "",
+    "lastName": "Doe Updated",
+    "mobile": "03987654",
+    "active": true
+  }
+}
+
+docs {
+  Update an existing client.
+  
+  Change the ID in the URL as needed.
+  
+  All fields are optional - only include fields to update:
+  - orderNumber: Order number
+  - firstName: Client first name
+  - middleName: Client middle name
+  - lastName: Client last name
+  - zoneId: Zone ID (must be active)
+  - amperageId: Amperage ID (must be active)
+  - paymentAmperageId: Payment amperage ID (must be active)
+  - exceptionId: Exception ID
+  - mobile: Mobile number
+  - address: Client address
+  - active: true for active, false for inactive
+  
+  Requires:
+  - Authentication (valid access token)
+  - Edit permission on clients page
+}

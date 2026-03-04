@@ -1,0 +1,36 @@
+meta {
+  name: Get Readings By Zone
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/api/aadad/1
+  body: none
+  auth: bearer
+}
+
+params:query {
+  ~includeStats: true
+}
+
+auth:bearer {
+  token: {{access_token}}
+}
+
+docs {
+  Get all meter readings (aadad) for clients in a zone.
+  
+  Change the zone ID (1) in the URL as needed.
+  
+  Query parameters:
+  - includeStats: true/false - Include consumption statistics
+  
+  Returns:
+  - data: Array of client readings with consumption calculated
+  - statistics: Zone statistics (if includeStats=true)
+  
+  Requires:
+  - Authentication (valid access token)
+  - Read permission on aadad page (pageid: 10)
+}

@@ -1,0 +1,32 @@
+meta {
+  name: Move New To Old
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{baseUrl}}/api/aadad/move-new-to-old
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{access_token}}
+}
+
+docs {
+  Move all new readings to old readings for all active clients.
+  
+  This operation is typically performed at the start of a new billing period
+  to archive the current readings and prepare for new readings.
+  
+  WARNING: This affects ALL active clients across ALL zones.
+  
+  Returns the number of clients updated.
+  
+  All updates are performed in a transaction - either all succeed or all fail.
+  
+  Requires:
+  - Authentication (valid access token)
+  - Edit permission on aadad page
+}

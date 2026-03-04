@@ -1,0 +1,32 @@
+meta {
+  name: Get Zone Statistics
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/api/aadad/1/statistics
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{access_token}}
+}
+
+docs {
+  Get consumption statistics for a zone.
+  
+  Change the zone ID (1) in the URL as needed.
+  
+  Returns:
+  - totalClients: Number of active clients in zone
+  - totalConsumption: Sum of all consumption
+  - avgConsumption: Average consumption per client
+  - minConsumption: Minimum consumption
+  - maxConsumption: Maximum consumption
+  
+  Requires:
+  - Authentication (valid access token)
+  - Read permission on aadad page
+}

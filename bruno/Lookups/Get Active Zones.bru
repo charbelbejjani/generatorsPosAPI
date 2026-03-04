@@ -1,0 +1,24 @@
+meta {
+  name: Get Active Zones
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/api/lookups/zones
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{access_token}}
+}
+
+docs {
+  Get all active zones for dropdown lists.
+  
+  Returns minimal data: id, name, zoneGroupId
+  
+  Requires:
+  - Authentication (valid access token)
+}

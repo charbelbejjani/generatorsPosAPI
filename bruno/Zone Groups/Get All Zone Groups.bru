@@ -1,0 +1,23 @@
+meta {
+  name: Get All Zone Groups
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/api/zone-groups
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{access_token}}
+}
+
+docs {
+  Get all zone groups.
+  
+  Requires:
+  - Authentication (valid access token)
+  - Read permission on zone groups page (pageid: 6)
+}

@@ -1,0 +1,49 @@
+meta {
+  name: Bulk Update Readings
+  type: http
+  seq: 3
+}
+
+put {
+  url: {{baseUrl}}/api/aadad/1
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{access_token}}
+}
+
+body:json {
+  {
+    "readings": [
+      {
+        "clientId": 1,
+        "newReading": 1500
+      },
+      {
+        "clientId": 2,
+        "newReading": 2300
+      },
+      {
+        "clientId": 3,
+        "newReading": 1750
+      }
+    ]
+  }
+}
+
+docs {
+  Bulk update meter readings for all clients in a zone.
+  
+  Change the zone ID (1) in the URL as needed.
+  
+  Body:
+  - readings (required): Array of {clientId, newReading} objects
+  
+  All updates are performed in a transaction - either all succeed or all fail.
+  
+  Requires:
+  - Authentication (valid access token)
+  - Edit permission on aadad page
+}
