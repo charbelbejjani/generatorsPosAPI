@@ -11,6 +11,7 @@ export const getAll = async (req: Request, res: Response): Promise<void> => {
       activeOnly: activeOnly === 'true',
     });
     res.json(result);
+    console.log('Fetched clients:', result.length);
   } catch (error) {
     console.error('Get all clients error:', error);
     res.status(500).json({ error: 'FETCH_FAILED', message: 'Failed to fetch clients' });
@@ -79,10 +80,10 @@ export const create = async (req: Request, res: Response): Promise<void> => {
     console.error('Create client error:', error);
     const err = error as Error;
     const errorMap: Record<string, [number, string, string]> = {
-      ZONE_NOT_FOUND: [404, 'ZONE_NOT_FOUND', 'Zone not found or inactive'],
-      AMPERAGE_NOT_FOUND: [404, 'AMPERAGE_NOT_FOUND', 'Amperage not found or inactive'],
-      PAYMENT_AMPERAGE_NOT_FOUND: [404, 'PAYMENT_AMPERAGE_NOT_FOUND', 'Payment amperage not found or inactive'],
-      EXCEPTION_NOT_FOUND: [404, 'EXCEPTION_NOT_FOUND', 'Exception not found'],
+      ZONE_NOT_FOUND: [400, 'ZONE_NOT_FOUND', 'Zone not found or inactive'],
+      AMPERAGE_NOT_FOUND: [400, 'AMPERAGE_NOT_FOUND', 'Amperage not found or inactive'],
+      PAYMENT_AMPERAGE_NOT_FOUND: [400, 'PAYMENT_AMPERAGE_NOT_FOUND', 'Payment amperage not found or inactive'],
+      EXCEPTION_NOT_FOUND: [400, 'EXCEPTION_NOT_FOUND', 'Exception not found'],
     };
     const mapped = errorMap[err.message];
     if (mapped) {
@@ -129,10 +130,10 @@ export const update = async (req: Request, res: Response): Promise<void> => {
     console.error('Update client error:', error);
     const err = error as Error;
     const errorMap: Record<string, [number, string, string]> = {
-      ZONE_NOT_FOUND: [404, 'ZONE_NOT_FOUND', 'Zone not found or inactive'],
-      AMPERAGE_NOT_FOUND: [404, 'AMPERAGE_NOT_FOUND', 'Amperage not found or inactive'],
-      PAYMENT_AMPERAGE_NOT_FOUND: [404, 'PAYMENT_AMPERAGE_NOT_FOUND', 'Payment amperage not found or inactive'],
-      EXCEPTION_NOT_FOUND: [404, 'EXCEPTION_NOT_FOUND', 'Exception not found'],
+      ZONE_NOT_FOUND: [400, 'ZONE_NOT_FOUND', 'Zone not found or inactive'],
+      AMPERAGE_NOT_FOUND: [400, 'AMPERAGE_NOT_FOUND', 'Amperage not found or inactive'],
+      PAYMENT_AMPERAGE_NOT_FOUND: [400, 'PAYMENT_AMPERAGE_NOT_FOUND', 'Payment amperage not found or inactive'],
+      EXCEPTION_NOT_FOUND: [400, 'EXCEPTION_NOT_FOUND', 'Exception not found'],
     };
     const mapped = errorMap[err.message];
     if (mapped) {

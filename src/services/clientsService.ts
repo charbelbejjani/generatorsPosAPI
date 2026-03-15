@@ -18,9 +18,11 @@ export interface ClientEntity {
   mobile: string | null;
   address: string | null;
   active: boolean | null;
+  isAadad: boolean | null;
   timestamp: Date | null;
   oldAaddad: number | null;
   newAaddad: number | null;
+  gender: number | null;
 }
 
 type ClientWithRelations = Awaited<ReturnType<typeof fetchClientWithRelations>>;
@@ -61,9 +63,11 @@ const mapToEntity = (c: NonNullable<ClientWithRelations>): ClientEntity => ({
   mobile: c.client_mobile,
   address: c.client_address,
   active: c.client_active,
+  isAadad: c.client_aadad ?? null,
   timestamp: c.client_ts,
   oldAaddad: c.old_addad,
   newAaddad: c.new_addad,
+  gender: c.client_gender,
 });
 
 export interface GetAllOptions {
@@ -77,7 +81,6 @@ export const getAll = async ({
   search,
   activeOnly = false,
 }: GetAllOptions = {}): Promise<ClientEntity[]> => {
-  console.log('[getAll] inputs:', { zoneId, search, activeOnly });
 
   const where: Record<string, unknown> = {};
   if (zoneId) where.client_zone_id = zoneId;
@@ -93,7 +96,6 @@ export const getAll = async ({
     ];
   }
 
-  console.log('[getAll] where clause:', JSON.stringify(where, null, 2));
 
   const data = await prisma.clients.findMany({
     where,
@@ -106,7 +108,6 @@ export const getAll = async ({
     orderBy: [{ client_order_num: 'asc' }, { client_first_name: 'asc' }],
   });
 
-  console.log('[getAll] rows returned:', data.length);
 
   return data.map(mapToEntity);
 };
@@ -211,23 +212,6 @@ export const update = async (
     zoneId, amperageId, paymentAmperageId, exceptionId, exceptionAmount,
     mobile, address, active, userId, isAaddad
   } = input;
-
-  if (zoneId) {
-    const zone = await prisma.zones.findUnique({ where: { zone_id: zoneId } });
-    if (!zone || zone.zone_active !== true) throw new Error('ZONE_NOT_FOUND');
-  }
-  if (amperageId) {
-    const a = await prisma.amperage.findUnique({ where: { amp_id: amperageId } });
-    if (!a || a.amp_active !== true) throw new Error('AMPERAGE_NOT_FOUND');
-  }
-  if (paymentAmperageId) {
-    const pa = await prisma.amperage.findUnique({ where: { amp_id: paymentAmperageId } });
-    if (!pa || pa.amp_active !== true) throw new Error('PAYMENT_AMPERAGE_NOT_FOUND');
-  }
-  if (exceptionId) {
-    const e = await prisma.exceptions.findUnique({ where: { exp_id: exceptionId } });
-    if (!e) throw new Error('EXCEPTION_NOT_FOUND');
-  }
 
   const data: Record<string, unknown> = {};
   if (title !== undefined) data.client_title = title;

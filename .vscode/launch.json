@@ -2,14 +2,14 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Debug TS Node",
+      "name": "Attach to dev:debug",
       "type": "node",
-      "request": "launch",
-      "runtimeArgs": ["-r", "ts-node/register"],
-      "args": ["${workspaceFolder}/src/index.ts"],
-      "cwd": "${workspaceFolder}",
+      "request": "attach",
+      "port": 9229,
+      "restart": true,
       "skipFiles": ["<node_internals>/**"],
-      "sourceMaps": true
+      "sourceMaps": true,
+      "resolveSourceMapLocations": ["${workspaceFolder}/**", "!**/node_modules/**"]
     }
   ]
 }

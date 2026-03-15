@@ -41,7 +41,7 @@ model clients {
   client_active                                Boolean?           @default(true)
   client_ts                                    DateTime?          @default(now()) @db.Timestamp(0)
   client_userid                                Int?
-  client_gender                                Boolean?
+  client_gender                                Int?
   client_is_taxable                            Int?               @db.TinyInt
   client_order_num                             Int?
   client_title                                 String?            @db.VarChar(255)
@@ -128,7 +128,7 @@ model payments_details {
   pd_client_pay_amp_id                                     Int?
   pd_client_excep_flg                                      Int?
   pd_client_excep_amt                                      Int?
-  pd_client_gender                                         Boolean?
+  pd_client_gender                                         Int?
   pd_client_is_taxable                                     Int?         @db.TinyInt
   pd_client_order_num                                      Int?
   pd_client_title                                          String?      @db.VarChar(255)
