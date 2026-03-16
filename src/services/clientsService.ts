@@ -3,6 +3,7 @@ import prisma from '../prisma';
 export interface ClientEntity {
   id: number;
   orderNumber: number | null;
+  title: string | null,
   firstName: string | null;
   middleName: string | null;
   lastName: string | null;
@@ -15,6 +16,7 @@ export interface ClientEntity {
   paymentAmperageValue: number | null;
   exceptionId: number | null;
   exceptionName: string | null;
+  exceptionAmt: number | 0;
   mobile: string | null;
   address: string | null;
   active: boolean | null;
@@ -42,6 +44,7 @@ async function fetchClientWithRelations(id: number) {
 const mapToEntity = (c: NonNullable<ClientWithRelations>): ClientEntity => ({
   id: c.client_id,
   orderNumber: c.client_order_num,
+  title: c.client_title,
   firstName: c.client_first_name,
   middleName: c.client_middle_name,
   lastName: c.client_last_name,
@@ -60,6 +63,7 @@ const mapToEntity = (c: NonNullable<ClientWithRelations>): ClientEntity => ({
     : null,
   exceptionId: c.client_excep_flg,
   exceptionName: c.exceptions ? c.exceptions.exp_name : null,
+  exceptionAmt: c.client_excep_amt ? c.client_excep_amt : 0,
   mobile: c.client_mobile,
   address: c.client_address,
   active: c.client_active,
@@ -228,7 +232,7 @@ export const update = async (
   if (exceptionAmount !== undefined) data.client_excep_amt = exceptionAmount;
   if (address !== undefined) data.client_address = address;
   if (active !== undefined) data.client_active = active;
-  if (isAaddad !== undefined) data.client_is_aaddad = isAaddad;
+  if (isAaddad !== undefined) data.client_aadad = isAaddad;
   if (userId !== undefined) data.client_userid = userId;
 
   if (Object.keys(data).length === 0) return getById(id);

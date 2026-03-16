@@ -127,7 +127,6 @@ export const update = async (req: Request, res: Response): Promise<void> => {
     }
     res.json(client);
   } catch (error) {
-    console.error('Update client error:', error);
     const err = error as Error;
     const errorMap: Record<string, [number, string, string]> = {
       ZONE_NOT_FOUND: [400, 'ZONE_NOT_FOUND', 'Zone not found or inactive'],
