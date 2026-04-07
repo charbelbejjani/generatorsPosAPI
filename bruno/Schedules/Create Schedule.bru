@@ -1,0 +1,44 @@
+meta {
+  name: Create Schedule
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{baseUrl}}/api/schedules
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{access_token}}
+}
+
+body:json {
+  {
+    "month": 4,
+    "year": 2026,
+    "description": "April 2026",
+    "cost": 150000,
+    "kwCost": 5000,
+    "dollarRate": 89500,
+    "active": true
+  }
+}
+
+docs {
+  Create a new payment schedule.
+
+  Fields:
+  - month (required): Month number (1-12) — month+year must be unique
+  - year (required): Year (e.g. 2026) — month+year must be unique
+  - description (optional): Description label
+  - cost (optional): Cost per 5 AMP
+  - kwCost (optional): Cost per KW
+  - dollarRate (optional): Dollar exchange rate
+  - active (optional): Default true
+
+  Requires:
+  - Authentication (valid access token)
+  - Add permission on schedules page
+}

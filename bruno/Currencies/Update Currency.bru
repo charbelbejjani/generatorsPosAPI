@@ -1,0 +1,38 @@
+meta {
+  name: Update Currency
+  type: http
+  seq: 4
+}
+
+put {
+  url: {{baseUrl}}/api/currencies/1
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{access_token}}
+}
+
+body:json {
+  {
+    "symbol": "$",
+    "active": true
+  }
+}
+
+docs {
+  Update an existing currency.
+
+  Change the ID in the URL as needed.
+
+  Fields:
+  - symbol (optional): Currency symbol
+  - active (optional): Enable/disable the currency
+
+  Note: description is immutable after creation.
+
+  Requires:
+  - Authentication (valid access token)
+  - Edit permission on currencies page
+}

@@ -147,6 +147,262 @@
         }
       },
       "description": "Create a new user (requires authentication and add permission)"
+    },
+    {
+      "name": "Get All Currencies",
+      "method": "GET",
+      "url": "{{baseUrl}}/api/currencies",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{access_token}}"
+        }
+      ],
+      "description": "Get all currencies"
+    },
+    {
+      "name": "Get Currency By ID",
+      "method": "GET",
+      "url": "{{baseUrl}}/api/currencies/1",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{access_token}}"
+        }
+      ],
+      "description": "Get a specific currency by ID"
+    },
+    {
+      "name": "Create Currency",
+      "method": "POST",
+      "url": "{{baseUrl}}/api/currencies",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{access_token}}"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "body": {
+        "type": "json",
+        "json": {
+          "description": "US Dollar",
+          "symbol": "$",
+          "active": true
+        }
+      },
+      "description": "Create a new currency. description must be unique."
+    },
+    {
+      "name": "Update Currency",
+      "method": "PUT",
+      "url": "{{baseUrl}}/api/currencies/1",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{access_token}}"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "body": {
+        "type": "json",
+        "json": {
+          "symbol": "$",
+          "active": true
+        }
+      },
+      "description": "Update symbol and/or active status of a currency. description is immutable."
+    },
+    {
+      "name": "Delete Currency",
+      "method": "DELETE",
+      "url": "{{baseUrl}}/api/currencies/1",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{access_token}}"
+        }
+      ],
+      "description": "Delete a currency by ID"
+    },
+    {
+      "name": "Get All Schedules",
+      "method": "GET",
+      "url": "{{baseUrl}}/api/schedules",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{access_token}}"
+        }
+      ],
+      "description": "Get all payment schedules ordered by year and month"
+    },
+    {
+      "name": "Get Schedule By ID",
+      "method": "GET",
+      "url": "{{baseUrl}}/api/schedules/1",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{access_token}}"
+        }
+      ],
+      "description": "Get a specific payment schedule by ID"
+    },
+    {
+      "name": "Create Schedule",
+      "method": "POST",
+      "url": "{{baseUrl}}/api/schedules",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{access_token}}"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "body": {
+        "type": "json",
+        "json": {
+          "month": 4,
+          "year": 2026,
+          "description": "April 2026",
+          "cost": 150000,
+          "kwCost": 5000,
+          "dollarRate": 89500,
+          "active": true
+        }
+      },
+      "description": "Create a new payment schedule. month+year combination must be unique."
+    },
+    {
+      "name": "Update Schedule",
+      "method": "PUT",
+      "url": "{{baseUrl}}/api/schedules/1",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{access_token}}"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "body": {
+        "type": "json",
+        "json": {
+          "description": "April 2026 Updated",
+          "cost": 160000,
+          "kwCost": 5500,
+          "dollarRate": 90000,
+          "active": true
+        }
+      },
+      "description": "Update a schedule. month and year are immutable after creation."
+    },
+    {
+      "name": "Delete Schedule",
+      "method": "DELETE",
+      "url": "{{baseUrl}}/api/schedules/1",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{access_token}}"
+        }
+      ],
+      "description": "Delete a payment schedule by ID"
+    },
+    {
+      "name": "Get All Phone Codes",
+      "method": "GET",
+      "url": "{{baseUrl}}/api/phone-codes",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{access_token}}"
+        }
+      ],
+      "description": "Get all phone codes ordered by number"
+    },
+    {
+      "name": "Get Phone Code By ID",
+      "method": "GET",
+      "url": "{{baseUrl}}/api/phone-codes/1",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{access_token}}"
+        }
+      ],
+      "description": "Get a specific phone code by ID"
+    },
+    {
+      "name": "Create Phone Code",
+      "method": "POST",
+      "url": "{{baseUrl}}/api/phone-codes",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{access_token}}"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "body": {
+        "type": "json",
+        "json": {
+          "number": "03",
+          "type": 2
+        }
+      },
+      "description": "Create a new phone code. number+type must be unique. type: 1=Land-line, 2=Mobile."
+    },
+    {
+      "name": "Update Phone Code",
+      "method": "PUT",
+      "url": "{{baseUrl}}/api/phone-codes/1",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{access_token}}"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "body": {
+        "type": "json",
+        "json": {
+          "number": "03",
+          "type": 2,
+          "active": 1
+        }
+      },
+      "description": "Update a phone code. active: 1=active, 0=inactive. type: 1=Land-line, 2=Mobile."
+    },
+    {
+      "name": "Delete Phone Code",
+      "method": "DELETE",
+      "url": "{{baseUrl}}/api/phone-codes/1",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{access_token}}"
+        }
+      ],
+      "description": "Delete a phone code by ID"
     }
   ],
   "environments": [

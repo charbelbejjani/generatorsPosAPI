@@ -1,0 +1,23 @@
+meta {
+  name: Get All Currencies
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/api/currencies
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{access_token}}
+}
+
+docs {
+  Get all currencies.
+
+  Requires:
+  - Authentication (valid access token)
+  - Read permission on currencies page
+}

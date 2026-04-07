@@ -1,0 +1,38 @@
+meta {
+  name: Update Phone Code
+  type: http
+  seq: 4
+}
+
+put {
+  url: {{baseUrl}}/api/phone-codes/1
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{access_token}}
+}
+
+body:json {
+  {
+    "number": "03",
+    "type": 2,
+    "active": 1
+  }
+}
+
+docs {
+  Update an existing phone code.
+
+  Change the ID in the URL as needed.
+
+  Fields:
+  - number (optional): Phone code number
+  - type (optional): 1 = Land-line, 2 = Mobile
+  - active (optional): 1 = active, 0 = inactive (activate/deactivate)
+
+  Requires:
+  - Authentication (valid access token)
+  - Edit permission on phone codes page
+}

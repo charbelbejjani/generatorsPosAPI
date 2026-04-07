@@ -1,0 +1,34 @@
+meta {
+  name: Create Phone Code
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{baseUrl}}/api/phone-codes
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{access_token}}
+}
+
+body:json {
+  {
+    "number": "03",
+    "type": 2
+  }
+}
+
+docs {
+  Create a new phone code.
+
+  Fields:
+  - number (required): Phone code number (e.g. "03", "01") — number+type must be unique
+  - type (required): 1 = Land-line, 2 = Mobile
+
+  Requires:
+  - Authentication (valid access token)
+  - Add permission on phone codes page
+}

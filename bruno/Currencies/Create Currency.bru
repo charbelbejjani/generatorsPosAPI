@@ -1,0 +1,36 @@
+meta {
+  name: Create Currency
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{baseUrl}}/api/currencies
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{access_token}}
+}
+
+body:json {
+  {
+    "description": "US Dollar",
+    "symbol": "$",
+    "active": true
+  }
+}
+
+docs {
+  Create a new currency.
+
+  Fields:
+  - description (required): Currency name — must be unique
+  - symbol (required): Currency symbol (e.g. $, £, €)
+  - active (optional): Default true
+
+  Requires:
+  - Authentication (valid access token)
+  - Add permission on currencies page
+}

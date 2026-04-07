@@ -1,0 +1,25 @@
+meta {
+  name: Delete Phone Code
+  type: http
+  seq: 5
+}
+
+delete {
+  url: {{baseUrl}}/api/phone-codes/1
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{access_token}}
+}
+
+docs {
+  Delete a phone code by ID.
+
+  Change the ID in the URL as needed.
+
+  Requires:
+  - Authentication (valid access token)
+  - Delete permission on phone codes page
+}

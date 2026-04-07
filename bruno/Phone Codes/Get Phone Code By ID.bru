@@ -1,0 +1,25 @@
+meta {
+  name: Get Phone Code By ID
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/api/phone-codes/1
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{access_token}}
+}
+
+docs {
+  Get a specific phone code by ID.
+
+  Change the ID in the URL as needed.
+
+  Requires:
+  - Authentication (valid access token)
+  - Read permission on phone codes page
+}

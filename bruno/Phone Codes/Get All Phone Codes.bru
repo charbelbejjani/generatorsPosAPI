@@ -1,0 +1,23 @@
+meta {
+  name: Get All Phone Codes
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/api/phone-codes
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{access_token}}
+}
+
+docs {
+  Get all phone codes ordered by number.
+
+  Requires:
+  - Authentication (valid access token)
+  - Read permission on phone codes page
+}

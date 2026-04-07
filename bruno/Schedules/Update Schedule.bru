@@ -1,0 +1,44 @@
+meta {
+  name: Update Schedule
+  type: http
+  seq: 4
+}
+
+put {
+  url: {{baseUrl}}/api/schedules/1
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{access_token}}
+}
+
+body:json {
+  {
+    "description": "April 2026 Updated",
+    "cost": 160000,
+    "kwCost": 5500,
+    "dollarRate": 90000,
+    "active": true
+  }
+}
+
+docs {
+  Update an existing payment schedule.
+
+  Change the ID in the URL as needed.
+
+  Fields:
+  - description (optional): Description label
+  - cost (optional): Cost per 5 AMP
+  - kwCost (optional): Cost per KW
+  - dollarRate (optional): Dollar exchange rate
+  - active (optional): Enable/disable the schedule
+
+  Note: month and year are immutable after creation.
+
+  Requires:
+  - Authentication (valid access token)
+  - Edit permission on schedules page
+}
