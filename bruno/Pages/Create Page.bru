@@ -1,0 +1,36 @@
+meta {
+  name: Create Page
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{baseUrl}}/api/pages
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{access_token}}
+}
+
+body:json {
+  {
+    "name": "Dashboard",
+    "url": "dashboard.php",
+    "sectionId": 1
+  }
+}
+
+docs {
+  Create a new page.
+
+  Fields:
+  - name (required): Page name — must be unique
+  - url (required): Page URL/path
+  - sectionId (required): Section ID this page belongs to
+
+  Requires:
+  - Authentication (valid access token)
+  - Add permission on pages page (page ID 3)
+}

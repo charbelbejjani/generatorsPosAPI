@@ -1,0 +1,34 @@
+meta {
+  name: Create User Group
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{baseUrl}}/api/user-groups
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{access_token}}
+}
+
+body:json {
+  {
+    "name": "Managers",
+    "active": true
+  }
+}
+
+docs {
+  Create a new user group.
+
+  Fields:
+  - name (required): Group name — must be unique
+  - active (optional): Default true
+
+  Requires:
+  - Authentication (valid access token)
+  - Add permission on user groups page (page ID 1)
+}

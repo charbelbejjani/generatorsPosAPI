@@ -1,0 +1,38 @@
+meta {
+  name: Update User Group
+  type: http
+  seq: 4
+}
+
+put {
+  url: {{baseUrl}}/api/user-groups/1
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{access_token}}
+}
+
+body:json {
+  {
+    "name": "Managers Updated",
+    "active": true
+  }
+}
+
+docs {
+  Update an existing user group.
+
+  Change the ID in the URL as needed.
+
+  Fields:
+  - name (optional): New group name
+  - active (optional): Enable/disable the group
+
+  Note: Cannot set active=false if users are assigned to this group.
+
+  Requires:
+  - Authentication (valid access token)
+  - Edit permission on user groups page (page ID 1)
+}

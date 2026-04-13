@@ -10,5 +10,7 @@ router.get('/zones', lookupsController.getZones);
 router.get('/zone-groups', lookupsController.getZoneGroups);
 router.get('/amperages', lookupsController.getAmperages);
 router.get('/exceptions', lookupsController.getExceptions);
+router.get('/user-groups', lookupsController.getUserGroups);
+router.get('/sections', lookupsController.getSections);
 
 export default router;

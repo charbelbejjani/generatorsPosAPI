@@ -1,0 +1,40 @@
+meta {
+  name: Update Page
+  type: http
+  seq: 4
+}
+
+put {
+  url: {{baseUrl}}/api/pages/1
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{access_token}}
+}
+
+body:json {
+  {
+    "name": "Dashboard Updated",
+    "url": "dashboard.php",
+    "sectionId": 1,
+    "active": true
+  }
+}
+
+docs {
+  Update an existing page.
+
+  Change the ID in the URL as needed.
+
+  Fields:
+  - name (optional): New page name
+  - url (optional): New page URL/path
+  - sectionId (optional): New section ID
+  - active (optional): Enable/disable the page
+
+  Requires:
+  - Authentication (valid access token)
+  - Edit permission on pages page (page ID 3)
+}

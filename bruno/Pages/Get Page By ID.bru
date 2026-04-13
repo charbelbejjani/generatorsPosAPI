@@ -1,0 +1,25 @@
+meta {
+  name: Get Page By ID
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/api/pages/1
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{access_token}}
+}
+
+docs {
+  Get a specific page by ID (includes section name).
+
+  Change the ID in the URL as needed.
+
+  Requires:
+  - Authentication (valid access token)
+  - Read permission on pages page (page ID 3)
+}

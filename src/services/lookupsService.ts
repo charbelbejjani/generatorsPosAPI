@@ -23,6 +23,11 @@ export interface ExceptionLookup {
   exp_name: string | null;
 }
 
+export interface UserGroupLookup {
+  groupid: number;
+  groupname: string | null;
+}
+
 export const getActiveZones = async (): Promise<ZoneLookup[]> => {
   return prisma.zones.findMany({
     where: { zone_active: true },
@@ -51,5 +56,24 @@ export const getActiveExceptions = async (): Promise<ExceptionLookup[]> => {
   return prisma.exceptions.findMany({
     select: { exp_id: true, exp_name: true },
     orderBy: { exp_name: 'asc' },
+  });};
+
+export const getActiveUserGroups = async (): Promise<UserGroupLookup[]> => {
+  return prisma.users_groups.findMany({
+    where: { group_active: true },
+    select: { groupid: true, groupname: true },
+    orderBy: { groupname: 'asc' },
+  });
+};
+
+export interface SectionLookup {
+  secid: number;
+  secname: string | null;
+}
+
+export const getAllSections = async (): Promise<SectionLookup[]> => {
+  return prisma.section.findMany({
+    select: { secid: true, secname: true },
+    orderBy: { secorder: 'asc' },
   });
 };

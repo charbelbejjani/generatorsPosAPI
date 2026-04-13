@@ -403,6 +403,173 @@
         }
       ],
       "description": "Delete a phone code by ID"
+    },
+    {
+      "name": "Get All User Groups",
+      "method": "GET",
+      "url": "{{baseUrl}}/api/user-groups",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{access_token}}"
+        }
+      ],
+      "description": "Get all user groups ordered by name"
+    },
+    {
+      "name": "Get User Group By ID",
+      "method": "GET",
+      "url": "{{baseUrl}}/api/user-groups/1",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{access_token}}"
+        }
+      ],
+      "description": "Get a specific user group by ID"
+    },
+    {
+      "name": "Create User Group",
+      "method": "POST",
+      "url": "{{baseUrl}}/api/user-groups",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{access_token}}"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "body": {
+        "type": "json",
+        "json": {
+          "name": "Managers",
+          "active": true
+        }
+      },
+      "description": "Create a new user group. name must be unique."
+    },
+    {
+      "name": "Update User Group",
+      "method": "PUT",
+      "url": "{{baseUrl}}/api/user-groups/1",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{access_token}}"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "body": {
+        "type": "json",
+        "json": {
+          "name": "Managers Updated",
+          "active": true
+        }
+      },
+      "description": "Update a user group. Cannot set active=false if users are assigned to this group."
+    },
+    {
+      "name": "Delete User Group",
+      "method": "DELETE",
+      "url": "{{baseUrl}}/api/user-groups/1",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{access_token}}"
+        }
+      ],
+      "description": "Delete a user group. Cannot delete if users are assigned to this group."
+    },
+    {
+      "name": "Get All Pages",
+      "method": "GET",
+      "url": "{{baseUrl}}/api/pages",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{access_token}}"
+        }
+      ],
+      "description": "Get all pages ordered by section name then page name. Includes section name."
+    },
+    {
+      "name": "Get Page By ID",
+      "method": "GET",
+      "url": "{{baseUrl}}/api/pages/1",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{access_token}}"
+        }
+      ],
+      "description": "Get a specific page by ID (includes section name)"
+    },
+    {
+      "name": "Create Page",
+      "method": "POST",
+      "url": "{{baseUrl}}/api/pages",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{access_token}}"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "body": {
+        "type": "json",
+        "json": {
+          "name": "Dashboard",
+          "url": "dashboard.php",
+          "sectionId": 1
+        }
+      },
+      "description": "Create a new page. name must be unique. sectionId must reference an existing section."
+    },
+    {
+      "name": "Update Page",
+      "method": "PUT",
+      "url": "{{baseUrl}}/api/pages/1",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{access_token}}"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "body": {
+        "type": "json",
+        "json": {
+          "name": "Dashboard Updated",
+          "url": "dashboard.php",
+          "sectionId": 1,
+          "active": true
+        }
+      },
+      "description": "Update a page's name, url, sectionId and/or active status."
+    },
+    {
+      "name": "Delete Page",
+      "method": "DELETE",
+      "url": "{{baseUrl}}/api/pages/1",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{access_token}}"
+        }
+      ],
+      "description": "Delete a page. Cannot delete if user rights are assigned to this page."
     }
   ],
   "environments": [

@@ -12,6 +12,8 @@ import aadadRouter from './aadad';
 import currenciesRouter from './currencies';
 import schedulesRouter from './schedules';
 import phoneCodesRouter from './phoneCodes';
+import userGroupsRouter from './userGroups';
+import pagesRouter from './pages';
 
 const router = Router();
 
@@ -27,5 +29,7 @@ router.use('/aadad', aadadRouter);
 router.use('/currencies', currenciesRouter);
 router.use('/schedules', schedulesRouter);
 router.use('/phone-codes', phoneCodesRouter);
+router.use('/user-groups', userGroupsRouter);
+router.use('/pages', pagesRouter);
 
 export default router;

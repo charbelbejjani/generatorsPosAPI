@@ -1,0 +1,27 @@
+meta {
+  name: Delete Page
+  type: http
+  seq: 5
+}
+
+delete {
+  url: {{baseUrl}}/api/pages/1
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{access_token}}
+}
+
+docs {
+  Delete a page by ID.
+
+  Change the ID in the URL as needed.
+
+  Note: Cannot delete if user rights are assigned to this page.
+
+  Requires:
+  - Authentication (valid access token)
+  - Delete permission on pages page (page ID 3)
+}

@@ -41,3 +41,23 @@ export const getExceptions = async (req: Request, res: Response): Promise<void> 
     res.status(500).json({ error: 'FETCH_FAILED', message: 'Failed to fetch exceptions' });
   }
 };
+
+export const getUserGroups = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const groups = await lookupsService.getActiveUserGroups();
+    res.json(groups);
+  } catch (error) {
+    console.error('Get user groups lookup error:', error);
+    res.status(500).json({ error: 'FETCH_FAILED', message: 'Failed to fetch user groups' });
+  }
+};
+
+export const getSections = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const sections = await lookupsService.getAllSections();
+    res.json(sections);
+  } catch (error) {
+    console.error('Get sections lookup error:', error);
+    res.status(500).json({ error: 'FETCH_FAILED', message: 'Failed to fetch sections' });
+  }
+};

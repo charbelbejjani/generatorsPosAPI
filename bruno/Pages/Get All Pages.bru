@@ -1,0 +1,24 @@
+meta {
+  name: Get All Pages
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/api/pages
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{access_token}}
+}
+
+docs {
+  Get all pages ordered by section name then page name.
+  Each page includes its section name.
+
+  Requires:
+  - Authentication (valid access token)
+  - Read permission on pages page (page ID 3)
+}

@@ -1,0 +1,23 @@
+meta {
+  name: Get All User Groups
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/api/user-groups
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{access_token}}
+}
+
+docs {
+  Get all user groups ordered by name.
+
+  Requires:
+  - Authentication (valid access token)
+  - Read permission on user groups page (page ID 1)
+}
