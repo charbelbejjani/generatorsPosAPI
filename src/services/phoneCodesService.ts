@@ -18,7 +18,7 @@ const mapToEntity = (p: PhoneCodeModel): PhoneCodeEntity => ({
 });
 
 export const getAll = async (): Promise<PhoneCodeEntity[]> => {
-  const rows = await prisma.tblphonecodes.findMany({ orderBy: { code_num: 'asc' } });
+  const rows = await prisma.tblphonecodes.findMany({ orderBy: { code_id: 'desc' } });
   return rows.map(mapToEntity);
 };
 

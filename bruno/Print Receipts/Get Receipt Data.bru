@@ -1,0 +1,38 @@
+meta {
+  name: Get Receipt Data
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{baseUrl}}/api/print-receipts/receipt/1
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{access_token}}
+}
+
+docs {
+  Get full receipt data for a single payment, used to render the printed receipt.
+
+  URL parameter:
+  - id: Payment ID (pd_id)
+
+  Returns:
+  - pd_id, client_name, sch_date, cost, amp_value, pay_val, zone_name
+  - pd_serial: Receipt serial number
+  - printing_date: Date the receipt was printed
+  - pd_client_aadad: Whether client is on aadad billing
+  - pd_client_old_aadad, pd_client_new_aadad: Meter readings (if aadad)
+  - amp_fix_amount, sch_kw_cost, pd_amp_min_kw_value: Calculation fields
+  - pd_dollar_rate, dollar_amt: Dollar conversion values
+  - pd_amp_fixed_amount: Fixed amperage amount
+
+  Returns 404 if the payment is not found.
+
+  Requires:
+  - Authentication (valid access token)
+  - Read permission on print receipts page (page 16)
+}

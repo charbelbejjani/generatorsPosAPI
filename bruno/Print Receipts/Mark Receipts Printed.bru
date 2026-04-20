@@ -1,0 +1,40 @@
+meta {
+  name: Mark Receipts Printed
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{baseUrl}}/api/print-receipts/mark-printed
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{access_token}}
+}
+
+body:json {
+  {
+    "pdIds": [1, 2, 3]
+  }
+}
+
+docs {
+  Mark one or more payment receipts as printed.
+
+  Fields:
+  - pdIds (required): Array of payment IDs to mark as printed
+
+  Behavior:
+  - Only processes payments that are active (pd_active=1) and not yet printed (pd_print=0)
+  - IDs that are already printed or inactive are silently skipped
+  - For each eligible payment:
+    - Generates a serial number (format: BP<year><6-digit-sequence>, e.g. BP2026000001)
+    - Sets pd_print=1, pd_serial, pd_print_ts, pd_print_userid
+  - Returns the list of payment IDs that were successfully marked as printed
+
+  Requires:
+  - Authentication (valid access token)
+  - Add permission on print receipts page (page 16)
+}

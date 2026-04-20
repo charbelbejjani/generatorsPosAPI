@@ -27,7 +27,7 @@ const mapToEntity = (s: ScheduleModel): ScheduleEntity => ({
 
 export const getAll = async (): Promise<ScheduleEntity[]> => {
   const rows = await prisma.tblschedule.findMany({
-    orderBy: [{ sch_year: 'asc' }, { sch_month: 'asc' }],
+    orderBy: { sch_id: 'desc' },
   });
   return rows.map(mapToEntity);
 };

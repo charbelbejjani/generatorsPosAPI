@@ -23,7 +23,7 @@ export const getAll = async (zoneGroupId: number | null = null): Promise<ZoneEnt
   const zones = await prisma.zones.findMany({
     where: zoneGroupId ? { zone_zg_id: zoneGroupId } : undefined,
     include: { zones_groups: true },
-    orderBy: { zone_name: 'asc' }
+    orderBy: { zone_id: 'desc' }
   });
   return zones.map(mapToEntity);
 };

@@ -12,7 +12,7 @@ const mapToEntity = (row: ExceptionModel): ExceptionEntity => ({
 });
 
 export const getAll = async (): Promise<ExceptionEntity[]> => {
-  const rows = await prisma.exceptions.findMany({ orderBy: { exp_name: 'asc' } });
+  const rows = await prisma.exceptions.findMany({ orderBy: { exp_id: 'desc' } });
   return rows.map(mapToEntity);
 };
 

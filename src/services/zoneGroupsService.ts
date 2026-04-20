@@ -18,7 +18,7 @@ const mapToEntity = (zg: zones_groups): ZoneGroupEntity => ({
 });
 
 export const getAll = async (): Promise<ZoneGroupEntity[]> => {
-  const rows = await prisma.zones_groups.findMany({ orderBy: { zg_name: 'asc' } });
+  const rows = await prisma.zones_groups.findMany({ orderBy: { zg_id: 'desc' } });
   return rows.map(mapToEntity);
 };
 

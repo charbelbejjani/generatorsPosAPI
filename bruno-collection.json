@@ -570,6 +570,41 @@
         }
       ],
       "description": "Delete a page. Cannot delete if user rights are assigned to this page."
+    },
+    {
+      "name": "Get Schedules (Dropdown)",
+      "method": "GET",
+      "url": "{{baseUrl}}/api/lookups/schedules",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{access_token}}"
+        }
+      ],
+      "description": "Get all schedules for the monthly payments dropdown. Returns sch_id, sch_month, sch_year, sch_label. Ordered by sch_id DESC."
+    },
+    {
+      "name": "Generate Monthly Payments",
+      "method": "POST",
+      "url": "{{baseUrl}}/api/monthly-payments/generate",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{access_token}}"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "body": {
+        "type": "json",
+        "json": {
+          "schId": 1,
+          "isAadad": null
+        }
+      },
+      "description": "Generate monthly payments for a schedule. schId required. isAadad: null=all, 0=non-aadad only, 1=aadad only. Returns count of inserted records. Clients already having payments for the schedule are skipped automatically."
     }
   ],
   "environments": [

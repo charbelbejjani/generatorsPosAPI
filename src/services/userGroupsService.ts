@@ -14,7 +14,7 @@ const mapToEntity = (g: UserGroupModel): UserGroupEntity => ({
 });
 
 export const getAll = async (): Promise<UserGroupEntity[]> => {
-  const rows = await prisma.users_groups.findMany({ orderBy: { groupname: 'asc' } });
+  const rows = await prisma.users_groups.findMany({ orderBy: { groupid: 'desc' } });
   return rows.map(mapToEntity);
 };
 

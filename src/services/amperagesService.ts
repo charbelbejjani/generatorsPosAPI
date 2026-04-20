@@ -26,7 +26,7 @@ const mapToEntity = (a: AmperageModel): AmperageEntity => ({
 });
 
 export const getAll = async (): Promise<AmperageEntity[]> => {
-  const rows = await prisma.amperage.findMany({ orderBy: { amp_value: 'asc' } });
+  const rows = await prisma.amperage.findMany({ orderBy: { amp_id: 'desc' } });
   return rows.map(mapToEntity);
 };
 

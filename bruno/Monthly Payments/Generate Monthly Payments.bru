@@ -1,0 +1,47 @@
+meta {
+  name: Generate Monthly Payments
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{baseUrl}}/api/monthly-payments/generate
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{access_token}}
+}
+
+body:json {
+  {
+    "schId": 1,
+    "isAadad": null
+  }
+}
+
+docs {
+  Generate monthly payments for a schedule (equivalent to "Get Monthly Payments" button).
+
+  Fields:
+  - schId (required): Schedule ID — must reference an active schedule
+  - isAadad (optional): Filter clients by aadad status
+      - null or omit → generate for ALL clients
+      - 0            → generate for non-aadad clients only
+      - 1            → generate for aadad clients only
+
+  Behavior:
+  - Checks the schedule exists and is active; returns 404 if not
+  - Inserts payment_details rows for all matching active clients
+  - Clients that already have an active payment for this schedule are automatically skipped
+  - Returns the number of newly inserted records
+
+  Amount calculation:
+  - Aadad clients: based on (new_addad - old_addad) * kw_cost ± fixed amount, with min_kw rules
+  - Regular clients: based on amp_value * sch_cost / 5, with exception and minimum (15,000) rules
+
+  Requires:
+  - Authentication (valid access token)
+  - Add permission on monthly payments page (page ID 14)
+}

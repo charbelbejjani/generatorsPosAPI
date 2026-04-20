@@ -14,6 +14,9 @@ import schedulesRouter from './schedules';
 import phoneCodesRouter from './phoneCodes';
 import userGroupsRouter from './userGroups';
 import pagesRouter from './pages';
+import monthlyPaymentsRouter from './monthlyPayments';
+import printReceiptsRouter from './printReceipts';
+import allReceiptsRouter from './allReceipts';
 
 const router = Router();
 
@@ -31,5 +34,8 @@ router.use('/schedules', schedulesRouter);
 router.use('/phone-codes', phoneCodesRouter);
 router.use('/user-groups', userGroupsRouter);
 router.use('/pages', pagesRouter);
+router.use('/monthly-payments', monthlyPaymentsRouter);
+router.use('/print-receipts', printReceiptsRouter);
+router.use('/all-receipts', allReceiptsRouter);
 
 export default router;

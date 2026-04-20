@@ -30,7 +30,7 @@ const mapToEntity = (
 export const getAll = async (): Promise<PageEntity[]> => {
   const rows = await prisma.pages.findMany({
     include: { section_pages_sectionTosection: true },
-    orderBy: [{ section_pages_sectionTosection: { secname: 'asc' } }, { pagename: 'asc' }],
+    orderBy: { pageid: 'desc' },
   });
   return rows.map(mapToEntity);
 };

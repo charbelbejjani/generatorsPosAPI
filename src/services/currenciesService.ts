@@ -18,7 +18,7 @@ const mapToEntity = (c: CurrencyModel): CurrencyEntity => ({
 });
 
 export const getAll = async (): Promise<CurrencyEntity[]> => {
-  const rows = await prisma.tblcurrencies.findMany({ orderBy: { curr_desc: 'asc' } });
+  const rows = await prisma.tblcurrencies.findMany({ orderBy: { curr_id: 'desc' } });
   return rows.map(mapToEntity);
 };
 

@@ -12,5 +12,6 @@ router.get('/amperages', lookupsController.getAmperages);
 router.get('/exceptions', lookupsController.getExceptions);
 router.get('/user-groups', lookupsController.getUserGroups);
 router.get('/sections', lookupsController.getSections);
+router.get('/schedules', lookupsController.getSchedules);
 
 export default router;

@@ -109,7 +109,7 @@ export const getAll = async ({
       amperage_clients_client_pay_amp_idToamperage: true,
       exceptions: true,
     },
-    orderBy: [{ client_order_num: 'asc' }, { client_first_name: 'asc' }],
+    orderBy: { client_id: 'desc' },
   });
 
 

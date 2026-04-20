@@ -1,0 +1,24 @@
+meta {
+  name: Get Schedules (Dropdown)
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/api/lookups/schedules
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{access_token}}
+}
+
+docs {
+  Get all schedules for the monthly payments dropdown.
+  Returns sch_id, sch_month, sch_year, and sch_label (formatted as "month - year").
+  Ordered by sch_id DESC (latest first).
+
+  Requires:
+  - Authentication (valid access token)
+}

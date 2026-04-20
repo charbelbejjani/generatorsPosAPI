@@ -1,0 +1,48 @@
+meta {
+  name: Bulk Action On Receipts
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{baseUrl}}/api/all-receipts/bulk-action
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{access_token}}
+}
+
+body:json {
+  {
+    "pdIds": [1, 2, 3],
+    "action": 1
+  }
+}
+
+docs {
+  Apply a bulk action to a list of payment receipts.
+
+  Fields:
+  - pdIds (required): Array of payment IDs to act on
+  - action (required): Action type —
+      1 = Undo payment   → clears pd_paid, pd_paid_userid, pd_paid_ts
+      2 = Undo print     → clears pd_print, pd_print_userid, pd_print_ts, pd_serial
+      3 = Delete         → sets pd_active = 0 (soft delete)
+
+  Behavior:
+  - Only affects payments that are currently active (pd_active = 1)
+  - Inactive payments in the list are silently skipped
+  - Returns the number of affected rows
+
+  Returns:
+  {
+    "message": "Action applied successfully",
+    "affected": 3
+  }
+
+  Requires:
+  - Authentication (valid access token)
+  - Edit permission on page 16
+}

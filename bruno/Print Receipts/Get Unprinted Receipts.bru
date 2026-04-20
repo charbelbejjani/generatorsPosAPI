@@ -1,0 +1,41 @@
+meta {
+  name: Get Unprinted Receipts
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/api/print-receipts
+  body: none
+  auth: bearer
+}
+
+params:query {
+  ~zoneGroupId: 1
+}
+
+auth:bearer {
+  token: {{access_token}}
+}
+
+docs {
+  Get all unprinted payment receipts (pd_active=1, pd_print=0, pd_amt≠0).
+
+  Query parameters (all optional):
+  - zoneGroupId: Filter results to a specific zone group
+
+  Returns an array of:
+  - pd_id: Payment ID
+  - client_name: Full client name
+  - sch_date: Schedule label (month - year)
+  - cost: Payment amount
+  - amp_value: Client amperage value
+  - pay_val: Payment amperage value
+  - zone_name: Client zone name
+
+  Results are ordered by zone group name, zone name, then client order number.
+
+  Requires:
+  - Authentication (valid access token)
+  - Read permission on print receipts page (page 16)
+}

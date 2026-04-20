@@ -1,0 +1,33 @@
+meta {
+  name: Delete Receipt
+  type: http
+  seq: 4
+}
+
+delete {
+  url: {{baseUrl}}/api/print-receipts/1
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{access_token}}
+}
+
+docs {
+  Soft-delete an unprinted receipt (sets pd_active=0).
+
+  URL parameter:
+  - id: Payment ID (pd_id) — change the ID in the URL as needed
+
+  Constraints:
+  - Only unprinted receipts (pd_print=0) can be deleted
+  - Returns 409 ALREADY_PRINTED if the receipt has been printed
+  - Returns 404 NOT_FOUND if the receipt does not exist or is already inactive
+
+  Returns 204 No Content on success.
+
+  Requires:
+  - Authentication (valid access token)
+  - Delete permission on print receipts page (page 16)
+}

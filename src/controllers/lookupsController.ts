@@ -61,3 +61,13 @@ export const getSections = async (req: Request, res: Response): Promise<void> =>
     res.status(500).json({ error: 'FETCH_FAILED', message: 'Failed to fetch sections' });
   }
 };
+
+export const getSchedules = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const schedules = await lookupsService.getSchedules();
+    res.json(schedules);
+  } catch (error) {
+    console.error('Get schedules lookup error:', error);
+    res.status(500).json({ error: 'FETCH_FAILED', message: 'Failed to fetch schedules' });
+  }
+};

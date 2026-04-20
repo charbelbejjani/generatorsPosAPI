@@ -77,3 +77,23 @@ export const getAllSections = async (): Promise<SectionLookup[]> => {
     orderBy: { secorder: 'asc' },
   });
 };
+
+export interface ScheduleLookup {
+  sch_id: number;
+  sch_month: number | null;
+  sch_year: number | null;
+  sch_label: string;
+}
+
+export const getSchedules = async (): Promise<ScheduleLookup[]> => {
+  const rows = await prisma.tblschedule.findMany({
+    select: { sch_id: true, sch_month: true, sch_year: true },
+    orderBy: { sch_id: 'desc' },
+  });
+  return rows.map((s) => ({
+    sch_id: s.sch_id,
+    sch_month: s.sch_month,
+    sch_year: s.sch_year,
+    sch_label: `${s.sch_month} - ${s.sch_year}`,
+  }));
+};
