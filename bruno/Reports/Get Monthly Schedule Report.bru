@@ -1,0 +1,55 @@
+meta {
+  name: Get Monthly Schedule Report
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/api/reports/monthly-schedule?schId=1
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{access_token}}
+}
+
+docs {
+  Get the monthly schedule report data for a specific schedule.
+  The front end renders the report from the returned data.
+
+  Required query params:
+  - schId (number): The schedule ID to report on
+
+  Optional query params:
+  - zoneGroupId (number): Filter to a specific zone group
+  - hasException (0|1): Filter by exception flag — 0 = no exception, 1 = has exception
+  - beforeDate (YYYY-MM-DD): Clamp paid status — a payment is treated as paid only if pd_paid_ts <= beforeDate
+  - beforeSchId (number): Lower bound schedule ID for the previous-remaining-balance subquery (defaults to 7)
+
+  Response:
+  {
+    rows: [
+      {
+        clientId, clientName,
+        ampValue, ampNum,
+        pdAmt,            // amount in LBP (full integer, e.g. 150000)
+        dollarAmt,        // ceil(pdAmt / dollarRate)
+        paidCurrency,     // true = paid in USD, false/null = paid in LBP
+        isPaid,           // true if payment is collected
+        previousRemainingAmt, // sum of unpaid amounts from earlier schedules (null if none)
+        zoneId, zoneZgId, zoneName,
+        schedule          // e.g. "3 - 2024"
+      }
+    ],
+    summary: {
+      totalPaidLbp,
+      totalPaidDollar,
+      totalUnpaidLbp,
+      totalUnpaidDollarEquiv,
+      totalPreviousRemaining
+    }
+  }
+
+  Page permission ID: 18
+}

@@ -13,6 +13,21 @@ export const getByZone = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
+export const getByZoneQuery = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const zoneId = parseInt(req.query.zoneId as string, 10);
+    if (isNaN(zoneId)) {
+      res.status(400).json({ error: 'INVALID_PARAM', message: 'zoneId query parameter is required and must be a number' });
+      return;
+    }
+    const readings = await aadadService.getByZone(zoneId);
+    res.json(readings);
+  } catch (error) {
+    console.error('Get readings by zone error:', error);
+    res.status(500).json({ error: 'FETCH_FAILED', message: 'Failed to fetch readings' });
+  }
+};
+
 export const bulkUpdateByZone = async (req: Request, res: Response): Promise<void> => {
   try {
     const zoneId = parseInt(req.params.zoneId, 10);
@@ -51,5 +66,36 @@ export const getStatistics = async (req: Request, res: Response): Promise<void> 
   } catch (error) {
     console.error('Get zone statistics error:', error);
     res.status(500).json({ error: 'FETCH_FAILED', message: 'Failed to fetch statistics' });
+  }
+};
+
+export const getZoneData = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const zoneId     = parseInt(req.query.zoneId as string, 10);
+    const updateData = parseInt((req.query.updateData as string) ?? '1', 10);
+    if (isNaN(zoneId)) {
+      res.status(400).json({ error: 'INVALID_ZONE', message: 'zoneId is required' });
+      return;
+    }
+    const result = await aadadService.getZoneData(zoneId, updateData);
+    res.json(result);
+  } catch (error) {
+    console.error('Get zone data error:', error);
+    res.status(500).json({ error: 'FETCH_FAILED', message: 'Failed to fetch zone data' });
+  }
+};
+
+export const saveZoneData = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { clients } = req.body as { clients?: aadadService.SaveClient[] };
+    if (!clients || !Array.isArray(clients)) {
+      res.status(400).json({ error: 'INVALID_DATA', message: 'clients array is required' });
+      return;
+    }
+    const result = await aadadService.saveZoneData(clients);
+    res.json({ message: `${result.updatedCount} row(s) updated`, updatedCount: result.updatedCount });
+  } catch (error) {
+    console.error('Save zone data error:', error);
+    res.status(500).json({ error: 'SAVE_FAILED', message: 'Failed to save zone data' });
   }
 };

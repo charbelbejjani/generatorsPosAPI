@@ -11,11 +11,17 @@ export const generate = async (
   isAadad?: number // 0 = not aadad, 1 = is aadad, undefined = all
 ): Promise<GenerateResult> => {
   // Check schedule exists and is active (matches PHP: WHERE sch_id=:sch AND sch_active=1)
-  debugger
+  
   const schedule = await prisma.tblschedule.findFirst({
     where: { sch_id: schId, sch_active: true },
   });
   if (!schedule) throw new Error('SCHEDULE_NOT_FOUND');
+
+  // Check if payments have already been generated for this schedule
+  const existingCount = await prisma.payments_details.count({
+    where: { pd_sch_id: schId, pd_active: true },
+  });
+  if (existingCount > 0) throw new Error('ALREADY_GENERATED');
 
   // Execute the INSERT-SELECT. Two branches: with or without isAadad filter.
   // Matches PHP monthly_payments.php INSERT logic exactly.

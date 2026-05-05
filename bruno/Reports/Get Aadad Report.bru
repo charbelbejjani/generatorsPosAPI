@@ -1,0 +1,39 @@
+meta {
+  name: Get Aadad Report
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{baseUrl}}/api/reports/aadad
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{access_token}}
+}
+
+docs {
+  Get the aadad (meter readings) report for all active clients.
+  No filters — returns every active client ordered by zone group, zone, then client order.
+
+  Response:
+  {
+    rows: [
+      {
+        clientId,
+        clientName,
+        ampValue,       // amperage value (kw)
+        oldReading,     // previous meter reading (null if blank/zero)
+        newReading,     // current meter reading (null if blank/zero)
+        hasAadad,       // true if client uses meter billing
+        exceptionFlag,  // 0 = no exception, 1 = cap exception, 2 = fixed amount exception
+        highlight,      // true = flag in yellow (aadad client with missing or unchanged reading)
+        zoneId, zoneZgId, zoneName
+      }
+    ]
+  }
+
+  Page permission ID: 27
+}

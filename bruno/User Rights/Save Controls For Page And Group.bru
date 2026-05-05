@@ -1,0 +1,41 @@
+meta {
+  name: Save Controls For Page And Group
+  type: http
+  seq: 4
+}
+
+put {
+  url: {{baseUrl}}/api/user-rights/1/controls/2
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{access_token}}
+}
+
+body:json {
+  {
+    "controlIds": [1, 3, 5]
+  }
+}
+
+docs {
+  Save (overwrite) controls access for a specific page+group combination.
+  This deletes all existing controls for the group on this page and inserts the new selection.
+  Pass an empty array to revoke all controls for this group on this page.
+
+  URL Params:
+  - groupId: The ID of the user group
+  - pageId: The ID of the page
+
+  Body:
+  - controlIds (required): Array of control IDs to grant access to.
+    Only IDs belonging to the specified page are accepted; others are ignored.
+
+  Returns: 204 No Content on success.
+
+  Requires:
+  - Authentication (valid access token)
+  - Edit permission on user rights page (page ID 4)
+}

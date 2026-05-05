@@ -1,0 +1,45 @@
+meta {
+  name: Save Rights For Group
+  type: http
+  seq: 2
+}
+
+put {
+  url: {{baseUrl}}/api/user-rights/1
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{access_token}}
+}
+
+body:json {
+  {
+    "rights": [
+      { "pageId": 1, "permission": 4 },
+      { "pageId": 2, "permission": 1 },
+      { "pageId": 3, "permission": 2 }
+    ]
+  }
+}
+
+docs {
+  Save (overwrite) all rights for a user group.
+  This deletes all existing rights for the group and inserts the new ones.
+  Pages not included in the array will have no access (permission 0).
+
+  URL Params:
+  - groupId: The ID of the user group
+
+  Body:
+  - rights (required): Array of { pageId, permission }
+    - permission: 0 = no access, 1 = read, 2 = edit, 3 = add, 4 = delete
+    - Only entries with permission >= 1 are saved; permission 0 means no row is inserted.
+
+  Returns: 204 No Content on success.
+
+  Requires:
+  - Authentication (valid access token)
+  - Edit permission on user rights page (page ID 4)
+}

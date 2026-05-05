@@ -36,6 +36,10 @@ export const generate = async (req: Request, res: Response): Promise<void> => {
       res.status(404).json({ error: 'SCHEDULE_NOT_FOUND', message: 'Schedule not found or inactive' });
       return;
     }
+    if (err.message === 'ALREADY_GENERATED') {
+      res.status(409).json({ error: 'ALREADY_GENERATED', message: 'Payments for this schedule have already been generated' });
+      return;
+    }
     res.status(500).json({ error: 'GENERATE_FAILED', message: 'Failed to generate monthly payments' });
   }
 };

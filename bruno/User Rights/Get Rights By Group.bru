@@ -1,0 +1,33 @@
+meta {
+  name: Get Rights By Group
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/api/user-rights/1
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{access_token}}
+}
+
+docs {
+  Get all active pages (grouped by section) with the current permission for a given user group.
+
+  URL Params:
+  - groupId: The ID of the user group
+
+  Permission values per page:
+  - 0: No access
+  - 1: Read
+  - 2: Edit
+  - 3: Add
+  - 4: Delete
+
+  Requires:
+  - Authentication (valid access token)
+  - Read permission on user rights page (page ID 4)
+}

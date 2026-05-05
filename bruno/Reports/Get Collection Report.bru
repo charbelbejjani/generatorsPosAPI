@@ -1,0 +1,45 @@
+meta {
+  name: Get Collection Report
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/api/reports/collection?schId=1&type=1
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{access_token}}
+}
+
+docs {
+  Get the collection (remaining debts) report.
+  Shows clients with outstanding balances from previous schedules,
+  where the payment timestamp falls in the month following the selected schedule.
+
+  Required query params:
+  - schId (number): The reference schedule ID (upper bound — looks at pd_sch_id < schId)
+  - type (1|2):     1 = Loans / تحصيل, 2 = Doubtful / ديون هالكة
+
+  Optional query params:
+  - schIdMin (number): Lower bound schedule ID (pd_sch_id >= schIdMin)
+  - hasException (0|1): Filter by exception flag
+  - beforeDate (YYYY-MM-DD): Only include payments on or before this date
+
+  Response:
+  {
+    rows: [
+      {
+        clientId,
+        clientName,
+        totalAmt,   // sum of pd_amt (LBP integer)
+        zoneId, zoneZgId, zoneName
+      }
+    ],
+    totalAmt  // grand total
+  }
+
+  Page permission ID: 23
+}

@@ -1,0 +1,29 @@
+meta {
+  name: Get Controls By Page And Group
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{baseUrl}}/api/user-rights/1/controls/2
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{access_token}}
+}
+
+docs {
+  Get all active controls for a specific page, with whether the group currently has access to each control.
+
+  URL Params:
+  - groupId: The ID of the user group
+  - pageId: The ID of the page
+
+  Response: Array of { controlId, controlName, hasAccess }
+
+  Requires:
+  - Authentication (valid access token)
+  - Read permission on user rights page (page ID 4)
+}

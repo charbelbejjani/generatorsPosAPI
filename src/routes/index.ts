@@ -17,6 +17,8 @@ import pagesRouter from './pages';
 import monthlyPaymentsRouter from './monthlyPayments';
 import printReceiptsRouter from './printReceipts';
 import allReceiptsRouter from './allReceipts';
+import reportsRouter from './reports';
+import userRightsRouter from './userRights';
 
 const router = Router();
 
@@ -37,5 +39,7 @@ router.use('/pages', pagesRouter);
 router.use('/monthly-payments', monthlyPaymentsRouter);
 router.use('/print-receipts', printReceiptsRouter);
 router.use('/all-receipts', allReceiptsRouter);
+router.use('/reports', reportsRouter);
+router.use('/user-rights', userRightsRouter);
 
 export default router;
